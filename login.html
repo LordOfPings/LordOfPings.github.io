@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Zentrips</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Stylesheets -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
+		<link rel="stylesheet" href="login.css">      
+<!-- JavaScript, jQuery and Bootstrap library -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.bundle.min.js" integrity="sha384-VspmFJ2uqRrKr3en+IG0cIq1Cl/v/PHneDw6SQZYgrcr8ZZmZoQ3zhuGfMnSR/F2" crossorigin="anonymous"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.4/js/all.js"></script>
+<!-- Scripts -->
+        <script>
+				function go(){
+				document.getElementById("forms").submit();
+				}
+                
+			 function checkPasswordMatch() {
+					var password = $("#password").val();
+					var confirmPassword = $("#repassword").val();
+
+					if (password != confirmPassword) {
+						$("#match2").hide();
+						$("#match1").show();
+						}
+					else {
+						$("#match1").hide();
+						$("#match2").show();
+						}
+				}
+
+				$(document).ready(function () {
+				   $("#password, #repassword").keyup(checkPasswordMatch);
+				});
+
+			
+                $(document).ready(function(){
+						$(".log").click(function(){
+				            $("#signup").hide();
+                            $("#forgotpass").hide();
+                            $("#login").show();
+					});
+                        $("#register").click(function(){
+				            $("#login").hide();
+                            $("#forgotpass").hide();
+                            $("#signup").show();
+                            
+                    });
+                        $("a").click(function(){
+				            $("#login").hide();
+                            $("#signup").hide();
+                            $("#forgotpass").show();
+                    });    
+				});
+			</script>	
+	</head>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">Zentrips</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="dashboard.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.html">Sign In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="ticket.html">Trips</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div>
+            <div class="login-card">
+            <div class="form-group" id="login">
+                <div data-toggle="tooltip" title="Register" id="register" class="log" >Sign Up &nbsp<i class="fas fa-user-plus"></i></div>
+                <div> <h1>Log in</h1> </div>
+                    <form id="form0" action="dashboard.html" role="form" class="form-vertical">
+                        <input type="text" name="username" value="" autofocus autocomplete="off" placeholder="Username" required>
+                        <br>
+                        <input type="password" name="password" placeholder= "Password" required>
+                        <br>
+                        <button type="submit" class="login login-submit" value="Submit" onclick="go()">Sign In</button>
+                        <br>
+                    </form>
+                    <div class="login-help">
+                        <a href="#">Forgot password?</a>
+                         <div id="errMsg">
+                       <p style="color:red">
+                            <?php if(!empty($_SESSION['errMsg'])) { 
+                            echo $_SESSION['errMsg']; 
+                            } 
+                            ?>
+                        </p>
+                        <?php unset($_SESSION['errMsg']); 
+                        ?>
+                     </div>
+                    </div>
+                </div>    
+                <div class="form-group" id="signup" style="display:none">
+                    <div data-toggle="tooltip" title="Login" class="log">Login &nbsp<i class="fas fa-sign-in-alt"></i> </div>
+                    <div> <h1>Sign Up</h1> </div>
+                    <form id="form1" name="details" action="dashboard.html" method="post" role="form" class="form-vertical">
+                        <input type="email" name="email" placeholder="Email" required>
+                        <br>
+
+                        <input type="text" name="username" placeholder="Username" required>
+                        <br>
+                        <input id="password" type="password" name="pass" minlength="5" placeholder="Password" required>
+                        <br>
+                        <input id="repassword" type="password" name="passw" minlength="5" placeholder="Re-enter Password" onChange="checkPasswordMatch()" required>
+                        <div class="matches">
+                        <span id="match1">Password does not match</span> 
+                        <span id="match2">Password match</span> 
+                        </div>
+                        <br>
+                        <button id="buttn" type="submit" class="login login-submit">Register</button>
+                    </form>	
+                </div>
+                <div class="form-group" id="forgotpass" style="display:none">
+                    <div data-toggle="tooltip" title="Login" class="log">Login &nbsp<i class="fas fa-sign-in-alt"></i> </div>
+                    <div> <h1>Get Password</h1> </div>
+                    <form id="form2" action="retrieve.php" method="post" role="form">
+                        <div class="form-group">
+                            <input type="text" name="username" placeholder="Username" value="" autofocus autocomplete="off" required>
+                            <br>
+                             <input type="email" name="email" placeholder="Email" required>
+                            <br>
+                            <button type="submit" value="Submit" class="login login-submit">Submit</button>
+                            <br>
+                        </div>
+                     </form>
+                </div>
+            </div>
+		</div>
+    </body>
+</html>
